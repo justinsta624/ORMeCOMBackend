@@ -8,10 +8,10 @@ router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
-    const productValue = await Product.findAll({
+    const productData = await Product.findAll({
       include: [{ model: Category }, { model: Tag, through: ProductTag }],
     });
-    res.status(200).json(productValue);
+    res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -22,14 +22,14 @@ router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
   try {
-    const productValue = await Product.findByPk(req.params.id, {
+    const productData = await Product.findByPk(req.params.id, {
       include: [{ model: Category }, { model: Tag, through: ProductTag }],
     });
-    if (!productValue) {
+    if (!productData) {
       res.status(404).json({ message: 'No specific product was found for this ID' });
       return;
     }
-    res.status(200).json(productValue);
+    res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -47,19 +47,19 @@ router.post('/', async (req, res) => {
         tagIds: [1, 2, 3, 4]
       }
     */
-    const productValue = await Product.create({ product_name, price, stock, tagIds })
+    const productData = await Product.create({ product_name, price, stock, tagIds })
 
     // if there's product tags, we need to create pairings to bulk create in the ProductTag model
     if (tagIds && tagIds.length) {
       const productTagIdArr = tagIds.map((tag_id) => ({
-        product_id: productValue.id,
+        product_id: productData.id,
         tag_id,
       }));
       await ProductTag.bulkCreate(productTagIdArr);
     }
 
     // if no product tags, just respond
-    res.status(200).json(productValue);
+    res.status(200).json(productData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -100,13 +100,13 @@ router.put('/:id', async (req, res) => {
         await ProductTag.destroy({ where: { id: tagsToRemove } });
       }
 
-      // Fetch the productValue from the database with associated category and tags
-      const productValue = await Product.findByPk(req.params.id, {
+      // Fetch the productData from the database with associated category and tags
+      const productData = await Product.findByPk(req.params.id, {
         include: [{ model: Category }, { model: Tag, through: ProductTag }],
       });
 
-      // Respond with the productValue
-      res.status(200).json(productValue);
+      // Respond with the productData
+      res.status(200).json(productData);
     } else {
       // If no rows were affected, respond with a 404 Not Found status and a message
       res.status(404).json({ message: 'No specific product was found for this ID' });
@@ -120,16 +120,16 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
-    const productValue = await Product.destroy({
+    const productData = await Product.destroy({
       where: {
         id: req.params.id
       }
     });
-    if (!productValue) {
+    if (!productData) {
       res.status(404).json({ message: 'No specific product was found for this ID' });
       return;
     }
-    res.status(200).json(productValue);
+    res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   }

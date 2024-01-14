@@ -7,10 +7,10 @@ router.get('/', async (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   try {
-    const tagValue = await Tag.findAll({
+    const tagData = await Tag.findAll({
       include: [{ model: Product, through: ProductTag }],
     });
-    res.status(200).json(tagValue);
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -21,14 +21,14 @@ router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   try {
-    const tagValue = await Tag.findByPk(req.params.id, {
+    const tagData = await Tag.findByPk(req.params.id, {
       include: [{ model: Product, through: ProductTag }],
     });
-    if (!tagValue) {
+    if (!tagData) {
       res.status(404).json({ message: 'No specific tag was found for this ID' });
       return;
     }
-    res.status(200).json(tagValue);
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -37,8 +37,8 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new tag
   try {
-    const tagValue = await Tag.create(req.body);
-    res.status(200).json(tagValue);
+    const tagData = await Tag.create(req.body);
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -54,10 +54,10 @@ router.put('/:id', async (req, res) => {
 
     // Check if any rows were affected by the update
     if (affectedRows > 0) {
-      // If at least one row was affected, fetch the tagValue from the database
-      const tagValue = await Tag.findByPk(req.params.id);
-      // Respond with the tagValue
-      res.status(200).json(tagValue);
+      // If at least one row was affected, fetch the tagData from the database
+      const tagData = await Tag.findByPk(req.params.id);
+      // Respond with the tagData
+      res.status(200).json(tagData);
     } else {
       // If no rows were affected, respond with a 404 Not Found status and a message
       res.status(404).json({ message: 'No specific tag was found for this ID' });
@@ -71,16 +71,16 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
   try {
-    const tagValue = await Tag.destroy({
+    const tagData = await Tag.destroy({
       where: {
         id: req.params.id
       }
     });
-    if(!tagValue) {
+    if(!tagData) {
       res.status(404).json({message: 'No specific tag was found for this ID'});
       return;
     }
-    res.status(200).json(tagValue);
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
   }
