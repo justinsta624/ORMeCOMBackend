@@ -12,8 +12,7 @@
 Followings are the outcomes of the challenge 13:
 
 * A walkthrough video demonstrating the functionality of the application </br>
-[Walk-Through Video: Webm file](https://drive.google.com/file/d/1DesRcjh71bOVOYdFWXmtrp2ilY5Ni-Oo/view) </br>
-[Walk-Through Video: GIF file](https://github.com/justinsta624/MeetyourSVGMaker/blob/main/outcome/231210_Walk-Through-Video_Challenge10_H.LEE.gif)
+[Walk-Through Video: Webm file](https://drive.google.com/file/d/164pihh691IzNqXvhq1cBiXJgHt8DCMcR/view) </br>
 
 * The URL of the GitHub repository, with a unique name and a README describing the project </br>
 [Repository for this challenge](https://github.com/justinsta624/ORMeCOMBackend)
